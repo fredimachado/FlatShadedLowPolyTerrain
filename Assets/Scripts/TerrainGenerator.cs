@@ -6,9 +6,12 @@ public class TerrainGenerator : MonoBehaviour
     [SerializeField]
     private int size;
 
+    private Vector3[] vertices;
+    private int[] triangles;
+
     private void Start()
     {
-        var vertices = new Vector3[(size + 1) * (size + 1)];
+        vertices = new Vector3[(size + 1) * (size + 1)];
         for (int i = 0, z = 0; z <= size; z++)
         {
             for (int x = 0; x <= size; x++, i++)
@@ -17,7 +20,7 @@ public class TerrainGenerator : MonoBehaviour
             }
         }
 
-        var triangles = new int[size * size * 6];
+        triangles = new int[size * size * 6];
         for (int ti = 0, vi = 0, y = 0; y < size; y++, vi++)
         {
             for (int x = 0; x < size; x++, ti += 6, vi++)
@@ -29,9 +32,12 @@ public class TerrainGenerator : MonoBehaviour
             }
         }
 
+        FlatShading();
+
         var mesh = new Mesh();
         mesh.vertices = vertices;
         mesh.triangles = triangles;
+
         mesh.colors = GetRandomColors(vertices.Length);
 
         mesh.RecalculateNormals();
@@ -62,5 +68,18 @@ public class TerrainGenerator : MonoBehaviour
         }
 
         return colors;
+    }
+
+    private void FlatShading()
+    {
+        Vector3[] flatShadedVertices = new Vector3[triangles.Length];
+
+        for (int i = 0; i < triangles.Length; i++)
+        {
+            flatShadedVertices[i] = vertices[triangles[i]];
+            triangles[i] = i;
+        }
+
+        vertices = flatShadedVertices;
     }
 }
