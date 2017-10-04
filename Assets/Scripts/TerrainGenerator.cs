@@ -32,10 +32,35 @@ public class TerrainGenerator : MonoBehaviour
         var mesh = new Mesh();
         mesh.vertices = vertices;
         mesh.triangles = triangles;
+        mesh.colors = GetRandomColors(vertices.Length);
 
         mesh.RecalculateNormals();
 
+
         var meshFilter = GetComponent<MeshFilter>();
         meshFilter.sharedMesh = mesh;
+    }
+
+    private Color[] GetRandomColors(int vertexCount)
+    {
+        var colorPalette = new[]
+        {
+            new Color(1f, 0, 0),
+            new Color(0, 1f, 0),
+            new Color(0, 0, 1f),
+            new Color(1f, 1f, 0),
+            new Color(0, 1f, 1f),
+            new Color(1f, 0, 1f)
+        };
+
+        var colors = new Color[vertexCount];
+
+        for (int i = 0; i < vertexCount; i++)
+        {
+            var random = Random.Range(0, colorPalette.Length - 1);
+            colors[i] = colorPalette[random];
+        }
+
+        return colors;
     }
 }
