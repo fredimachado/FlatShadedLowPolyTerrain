@@ -60,11 +60,18 @@ public class TerrainGenerator : MonoBehaviour
         };
 
         var colors = new Color[vertexCount];
+        var randomIndex = 0;
 
         for (int i = 0; i < vertexCount; i++)
         {
-            var random = Random.Range(0, colorPalette.Length - 1);
-            colors[i] = colorPalette[random];
+            // Each triangle has 3 vertices, so, if i % 3 equals 0, then we are in a new triangle
+            // so, get a new random color
+            if (i % 3 == 0)
+            {
+                randomIndex = Random.Range(0, colorPalette.Length - 1);
+            }
+
+            colors[i] = colorPalette[randomIndex];
         }
 
         return colors;
