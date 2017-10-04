@@ -9,3 +9,8 @@ A simple implementation of a flat shaded low poly terrain for Unity 2017.
 * Use a custom shader to apply the color in each triangle
 
 ![Flat Shaded Low Poly Terrain - Unity](https://raw.githubusercontent.com/fredimachado/FlatShadedLowPolyTerrain/master/Screenshots/VertexColoredMesh.png)
+
+### TODO
+
+* Generate the Y coordinates using Perlin Noise
+* Color each triangle based on it's Y coordinate
